@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    let url = "https://jsonplaceholder.typicode.com/users";
+    const response = fetch(url).then((res) => {
+      res.json().then((data) => {
+        // console.log(data);
+        setUsers(data);
+      });
+    });
+  }, []);
 
-  return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
-  );
+  console.log(users);
+
+  return <></>;
 }
 
 export default App;
