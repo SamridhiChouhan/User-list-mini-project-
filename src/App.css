@@ -5,3 +5,12 @@
   background-size: cover;
   height: 100rem;
 }
+
+.game {
+  background-image: url("./controller.png");
+  background-size: cover;
+}
+
+body {
+  background-color: #fce017;
+}

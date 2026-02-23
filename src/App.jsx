@@ -11,6 +11,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [desiredResult, setDesiredResult] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
     let url = "https://jsonplaceholder.typicode.com/users";
@@ -22,16 +23,17 @@ function App() {
         return res.json();
       })
 
-      .then((data) => setUsers(data), setLoading(false))
+      .then((data) => {
+        setUsers(data);
+        setFilteredUsers(data);
+        setLoading(false);
+      })
       .catch((err) => setError(true));
   }, []);
 
   let loadMsg = "Loading...";
   let errMsg = "Something went wrong...";
 
-  let filteredUsers = users;
-
-  // function filter() {}
   function onChange(e) {
     console.log(e.target.value);
     setDesiredResult(e.target.value);
@@ -40,12 +42,16 @@ function App() {
   function onClick(e) {
     e.preventDefault();
     console.log(desiredResult);
-    // setDesiredResult("");
+
+    const result = users.filter((user) =>
+      user.name.toLowerCase().includes(desiredResult.toLowerCase()),
+    );
+    setFilteredUsers(result);
   }
 
   return (
     <>
-      <div className="img min-h-dvh min-w-full bg-amber-400 p-3 m-0  flex flex-col items-center">
+      <div className="img  min-w-full bg-[#fce017] p-3 m-0  flex flex-col items-center">
         {loading ? <Flash message={loadMsg} /> : ""}
         {error ? <Flash message={errMsg} /> : ""}
         <SearchBar
@@ -53,7 +59,7 @@ function App() {
           value={desiredResult}
           onClick={onClick}
         />
-        <UserList usersData={users} />
+        <UserList usersData={filteredUsers} />
       </div>
     </>
   );

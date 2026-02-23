@@ -4,7 +4,7 @@ function UserList(props) {
   let users = props.usersData;
   return (
     <>
-      <div className="mx-auto flex flex-col justify-center px-20">
+      <div className="mx-auto flex flex-wrap  justify-center px-20">
         {users.map((user, id) => {
           return <User value={user} key={id} />;
         })}
